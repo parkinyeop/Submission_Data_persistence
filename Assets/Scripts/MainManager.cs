@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MainManager : Singleton<MainManager>
+public class MainManager : MonoBehaviour
 {
     public Brick BrickPrefab;
     public int LineCount = 6;
@@ -28,8 +28,9 @@ public class MainManager : Singleton<MainManager>
     {
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
-        bestScore = 0;
-        
+        bestScore = ScoreManager.Inst.bestScore;
+        ScoreManager.Inst.LoadGameData();
+
         int[] pointCountArray = new [] {1,1,2,2,5,5};
         for (int i = 0; i < LineCount; ++i)
         {
@@ -86,7 +87,8 @@ public class MainManager : Singleton<MainManager>
         if (m_Points > bestScore)
         {
             bestScore = m_Points;
-            BestScore.text = $"Best Score : {bestScore}";
+            //ScoreManager.Inst.bestScore = bestScore;
+            //BestScore.text = $"Best Score : {bestScore} + {ScoreManager.Inst.bestName}";
             SceneManager.LoadScene(1);
         }
         
